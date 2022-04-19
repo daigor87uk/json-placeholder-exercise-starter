@@ -55,6 +55,27 @@
         });
     }
 
+    function readComments() {
+        setStatus('PREPARING GET REQUESTS');
+
+        fetch(`https://jsonplaceholder.typicode.com/users/${id.value}/posts/comments`, {
+            method: 'GET'
+        }).then(response => {
+            setStatus('RECIEVED RESPONSE');
+            if (response.ok) return response.json();
+            else throw new Error('Uh oh, something went wrong...');
+        })
+          .then(user => {
+              setStatus('RENDERING TABLE');
+              renderUserTable([user], dataTable);
+              setStatus('RESPONSE RENDERED INTO TABLE');
+        })
+          .catch(error => {
+              setStatus('ERROR ENCOUNTERD');
+              handleError(error);
+        });
+    }
+
     // default initialisation
     readAll();
 
@@ -64,6 +85,8 @@
             toggleIdVisibility(false);
         } else if (this.value == 'ID') {
             toggleIdVisibility(true);
+        } else if (this.value == 'COMMENTS') {
+            toggleIdVisibility(true);
         }
     });
 
@@ -71,5 +94,6 @@
         event.preventDefault(); // prevent default page refresh on form submission
         if (requestSelector.value == 'ALL') readAll();
         else if (requestSelector.value == 'ID') readById();
+        else if (requestSelector.value == 'COMMENTS') readByComments();
     });
 })();
