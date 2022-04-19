@@ -85,6 +85,8 @@
             toggleIdVisibility(false);
         } else if (this.value == 'ID') {
             toggleIdVisibility(true);
+        } else if (this.value == 'TODO') {
+            toggleIdVisibility(true);
         }
     });
 
@@ -92,5 +94,6 @@
         event.preventDefault(); // prevent default page refresh on form submission
         if (requestSelector.value == 'ALL') readAll();
         else if (requestSelector.value == 'ID') readById();
+        else if (requestSelector.value == 'TODO') readTodoById;
     });
 })();
